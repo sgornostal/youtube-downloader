@@ -1,0 +1,49 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+def mainClassName = 'com.ethereal.ymd.Main'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes 'Implementation-Version': version
+        attributes 'Main-Class': mainClassName
+    }
+    exclude('*youtube-dl*')
+}
+
+dependencies {
+    compile "com.intellij:forms_rt:$formsRtVersion",
+            "com.google.apis:google-api-services-youtube:$youtubeApiServiceVersion",
+            "com.google.http-client:google-http-client:$googleHttpClientVersion",
+            "com.google.http-client:google-http-client-jackson2:$googleJacksonVersion",
+            "log4j:log4j:$log4jVersion"
+}
+
+task dist(type: Copy) {
+        from 'src/main/resources', 'build/libs'
+        into 'build/dist'
+        include '*youtube-dl*', '*.jar'
+}
+
+
+task checkProperties() {
+    def filePath = 'src/main/resources/youtube.properties'
+    def props = new Properties()
+    if(!new File(filePath)) throw new GradleException('Invalid youtube key properties file. Please create valid ' +
+            'youtube.properties file in resources directory.')
+    file(filePath).withInputStream {
+        stream -> props.load(stream)
+    }
+    if(props.getProperty('youtube.apikey')?.equals('YOUR_SIMPLE_API_KEY_HERE') ||
+            props.getProperty('youtube.apikey')?.equals(''))
+        throw new GradleException('Enter valid youtube key in youtube.properties file.')
+}
+
+build.dependsOn checkProperties
+build.finalizedBy dist

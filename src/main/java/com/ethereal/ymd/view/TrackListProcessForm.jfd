@@ -1,0 +1,215 @@
+JFDML JFormDesigner: "5.1.2.0.134" Java: "1.7.0_17" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+			"$columnCount": 1
+			"$rowCount": 4
+			"margin": new java.awt.Insets( 5, 5, 5, 5 )
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 3
+			"title": "Download Settings"
+			"minimumSize": new java.awt.Dimension( 700, 300 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 4
+				"$rowCount": 1
+			} ) {
+				name: "pTitle"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lThumbnail"
+					"text": "Thumbnail"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lSource"
+					"text": "Source"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lQuality"
+					"text": "Quality"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 2
+					"anchor": 4
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "chbDownloadAll"
+					"text": "Download"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+					"anchor": 4
+					"useParentLayout": true
+					"hSizePolicy": 0
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"fill": 1
+				"hSizePolicy": 0
+				"vSizePolicy": 0
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "spItemsView"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+					"axis": 1
+				} ) {
+					name: "pItems"
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 1
+				"fill": 3
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 2
+				"$rowCount": 3
+			} ) {
+				name: "pSettings"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lMediaType"
+					"text": "Media Type"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "cbMediaType"
+					"model": new javax.swing.DefaultComboBoxModel {
+						selectedItem: "VIDEO"
+						addElement( "VIDEO" )
+						addElement( "AUDIO" )
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lAudioQuality"
+					"text": "Audio Quality (only for audio)"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 1
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+					"$columnCount": 2
+					"$rowCount": 1
+				} ) {
+					name: "pAudioQuality"
+					add( new FormComponent( "javax.swing.JComboBox" ) {
+						name: "cbAudioQuality"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "0"
+							addElement( "0" )
+							addElement( "1" )
+							addElement( "2" )
+							addElement( "3" )
+							addElement( "4" )
+							addElement( "5" )
+							addElement( "6" )
+							addElement( "7" )
+							addElement( "8" )
+							addElement( "9" )
+						}
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"hSizePolicy": 0
+						"vSizePolicy": 0
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "iQInfo"
+						"text": "0 (better) and 9 (worse)"
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"column": 1
+						"anchor": 8
+					} )
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 1
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+					"fill": 3
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lTargetDir"
+					"text": "Target Directory"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 2
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+					"$columnCount": 2
+					"$rowCount": 1
+				} ) {
+					name: "pDir"
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfDirectory"
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"fill": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "bEnterDirectory"
+						"text": "..."
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"column": 1
+						"hSizePolicy": 0
+						"vSizePolicy": 0
+					} )
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 2
+					"fill": 3
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 2
+				"fill": 3
+				"vSizePolicy": 0
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 4
+				"$rowCount": 1
+			} ) {
+				name: "pProcess"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "bDownload"
+					"text": "Download"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+					"useParentLayout": false
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "bCancel"
+					"text": "Cancel"
+					"enabled": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+				add( new FormComponent( "javax.swing.JProgressBar" ) {
+					name: "pDownloadProgress"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 2
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "bBack"
+					"text": "Back"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 3
+				"vSizePolicy": 0
+				"fill": 3
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 725, 410 )
+		} )
+	}
+}

@@ -1,0 +1,72 @@
+JFDML JFormDesigner: "5.1.2.0.134" Java: "1.7.0_17" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+			"$columnCount": 1
+			"$rowCount": 3
+			"margin": new java.awt.Insets( 5, 5, 5, 5 )
+		} ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 370, 420 )
+			"defaultCloseOperation": 3
+			"title": "Youtube Downloader"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lTitle"
+				"text": "Paste enter separated track list in form below "
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"fill": 1
+				"vSizePolicy": 0
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "spTextView"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "taTrackList"
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 1
+				"fill": 3
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 3
+				"$rowCount": 1
+			} ) {
+				name: "panel1"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "bProcess"
+					"text": "Process"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "bCancel"
+					"text": "Cancel"
+					"enabled": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"fill": 1
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+				} )
+				add( new FormComponent( "javax.swing.JProgressBar" ) {
+					name: "pProgressBar"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"fill": 1
+					"hSizePolicy": 0
+					"vSizePolicy": 0
+					"column": 2
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"row": 2
+				"vSizePolicy": 0
+				"fill": 3
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 370, 420 )
+		} )
+	}
+}
