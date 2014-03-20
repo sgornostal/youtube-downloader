@@ -56,10 +56,10 @@ public class MainForm extends JFrame {
                 @Override
                 protected void done() {
                     try {
-                        JOptionPane.showMessageDialog(MainForm.this, "Update Info", get(), JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(MainForm.this, get(), "Update Info", JOptionPane.INFORMATION_MESSAGE);
                         YOUTUBE_DL_UPDATED = true;
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(MainForm.this, "Update Error", e.toString(), JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(MainForm.this, e.toString(), "Update Error", JOptionPane.ERROR_MESSAGE);
                     }
                     taTrackList.setEnabled(true);
                     bProcess.setEnabled(true);
@@ -68,7 +68,7 @@ public class MainForm extends JFrame {
             }.execute();
             waitDialog.setUndecorated(true);
             JPanel panel = new JPanel();
-            final JLabel label = new JLabel("Please wait... Updating youtube-dl...");
+            final JLabel label = new JLabel("Please wait... Updating youtube-dl");
             panel.add(label);
             waitDialog.add(panel);
             waitDialog.pack();

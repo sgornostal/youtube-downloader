@@ -120,7 +120,7 @@ public class TrackListProcessForm extends JFrame {
                             final YoutubeResult selectedResult = youtubeResultView.getSelectedYoutubeResult();
                             if(selectedResult != null) {
                                 videoCount++;
-                                final StringBuilder paramBuilder = new StringBuilder();
+                                final StringBuilder paramBuilder = new StringBuilder(" ");
                                 switch ((String ) cbMediaType.getSelectedItem()) {
                                     case "VIDEO":
                                         paramBuilder.append("-f ");

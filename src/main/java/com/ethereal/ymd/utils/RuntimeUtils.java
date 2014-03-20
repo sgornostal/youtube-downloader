@@ -2,14 +2,11 @@ package com.ethereal.ymd.utils;
 
 import com.ethereal.ymd.youtube.Quality;
 import com.ethereal.ymd.youtube.YoutubeUtils;
-import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,8 +31,13 @@ public final class RuntimeUtils {
                 new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         String line;
-        while ((line = reader.readLine())!= null) {}
-        return line;
+        String retLine = null;
+        while ((line = reader.readLine())!= null) {
+            if(!line.isEmpty())  {
+                retLine = line;
+            }
+        }
+        return retLine;
     }
 
     public static void download(final String videoId, final String params) throws Exception{
