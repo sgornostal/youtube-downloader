@@ -5,6 +5,11 @@ Simple Java Swing Gui application for download video or audio from YouTube.
 
 You can download application [here](https://dl.dropboxusercontent.com/u/80544993/youtube-downloader.zip).
 
+Run
+----
+
+Execute youtube-downloader-{version}.jar file from explorer or $java -jar youtube-downloader-{version}.jar from command line
+
 System Requirements
 ----
 * Windows/Unix
