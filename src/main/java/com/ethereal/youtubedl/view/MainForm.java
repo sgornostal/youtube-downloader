@@ -1,22 +1,21 @@
-package com.ethereal.ymd.view;
+package com.ethereal.youtubedl.view;
 
+import com.ethereal.youtubedl.utils.RuntimeUtils;
+import com.ethereal.youtubedl.youtube.VideoSearch;
+import com.ethereal.youtubedl.youtube.VideoSearchProvider;
+import com.ethereal.youtubedl.youtube.YoutubeResult;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import javax.swing.*;
-
-import com.ethereal.ymd.utils.RuntimeUtils;
-import com.ethereal.ymd.youtube.VideoSearch;
-import com.ethereal.ymd.youtube.VideoSearchProvider;
-import com.ethereal.ymd.youtube.YoutubeResult;
-import com.intellij.uiDesigner.core.*;
-import org.apache.log4j.Logger;
 
 /**
  * @author Slava
@@ -34,19 +33,19 @@ public class MainForm extends JFrame {
 
     private synchronized void incProgress() {
         progress++;
-        pProgressBar.setValue((int) (((double) progress/trackList.size())*100));
+        pProgressBar.setValue((int) (((double) progress / trackList.size()) * 100));
     }
 
     public MainForm() {
         initComponents();
         setVisible(true);
 
-        if(!YOUTUBE_DL_UPDATED) {
+        if (!YOUTUBE_DL_UPDATED) {
             taTrackList.setEnabled(false);
             bProcess.setEnabled(false);
 
             final JDialog waitDialog = new JDialog(this, true);
-            new SwingWorker<String, Void>(){
+            new SwingWorker<String, Void>() {
 
                 @Override
                 protected String doInBackground() throws Exception {
@@ -91,7 +90,7 @@ public class MainForm extends JFrame {
                     protected Void doInBackground() throws Exception {
                         final ExecutorService executorService = Executors.newCachedThreadPool();
 
-                        for(final String track : trackList) {
+                        for (final String track : trackList) {
                             executorService.submit(new Runnable() {
                                 @Override
                                 public void run() {
@@ -109,9 +108,10 @@ public class MainForm extends JFrame {
                         }
                         return null;
                     }
+
                     @Override
                     protected void done() {
-                        if(!isInterrupted) {
+                        if (!isInterrupted) {
                             new TrackListProcessForm(results);
                             MainForm.this.dispose();
                         }
@@ -154,20 +154,20 @@ public class MainForm extends JFrame {
         //---- lTitle ----
         lTitle.setText("Paste enter separated track list in form below ");
         contentPane.add(lTitle, new GridConstraints(0, 0, 1, 1,
-            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED,
-            null, null, null));
+                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED,
+                null, null, null));
 
         //======== spTextView ========
         {
             spTextView.setViewportView(taTrackList);
         }
         contentPane.add(spTextView, new GridConstraints(1, 0, 1, 1,
-            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            null, null, null));
+                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                null, null, null));
 
         //======== panel1 ========
         {
@@ -176,30 +176,30 @@ public class MainForm extends JFrame {
             //---- bProcess ----
             bProcess.setText("Process");
             panel1.add(bProcess, new GridConstraints(0, 0, 1, 1,
-                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                GridConstraints.SIZEPOLICY_FIXED,
-                GridConstraints.SIZEPOLICY_FIXED,
-                null, null, null));
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    null, null, null));
 
             //---- bCancel ----
             bCancel.setText("Cancel");
             bCancel.setEnabled(false);
             panel1.add(bCancel, new GridConstraints(0, 1, 1, 1,
-                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                GridConstraints.SIZEPOLICY_FIXED,
-                GridConstraints.SIZEPOLICY_FIXED,
-                null, null, null));
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    null, null, null));
             panel1.add(pProgressBar, new GridConstraints(0, 2, 1, 1,
-                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                GridConstraints.SIZEPOLICY_FIXED,
-                GridConstraints.SIZEPOLICY_FIXED,
-                null, null, null));
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    null, null, null));
         }
         contentPane.add(panel1, new GridConstraints(2, 0, 1, 1,
-            GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED,
-            null, null, null));
+                GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED,
+                null, null, null));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents

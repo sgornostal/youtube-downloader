@@ -1,25 +1,25 @@
-package com.ethereal.ymd.youtube;
+package com.ethereal.youtubedl.youtube;
 
 /**
  * @author Slava
  */
 public final class Quality {
-    private int format;
+    private int formatCode;
     private String extension;
     private String resolution;
 
-    public Quality(int format, String extension, String resolution) {
-        this.format = format;
+    public Quality(int formatCode, String extension, String resolution) {
+        this.formatCode = formatCode;
         this.extension = extension;
         this.resolution = resolution;
     }
 
-    public int getFormat() {
-        return format;
+    public int getFormatCode() {
+        return formatCode;
     }
 
-    public void setFormat(int format) {
-        this.format = format;
+    public void setFormatCode(int formatCode) {
+        this.formatCode = formatCode;
     }
 
     public String getExtension() {

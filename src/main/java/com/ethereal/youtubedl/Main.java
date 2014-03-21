@@ -1,6 +1,7 @@
-package com.ethereal.ymd;
+package com.ethereal.youtubedl;
 
-import com.ethereal.ymd.view.MainForm;
+import com.ethereal.youtubedl.view.MainForm;
+
 import javax.swing.*;
 
 /**
@@ -9,7 +10,7 @@ import javax.swing.*;
 public class Main {
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         SwingUtilities.invokeLater(new Runnable() {
             @Override

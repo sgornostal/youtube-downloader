@@ -1,5 +1,6 @@
-package com.ethereal.ymd.youtube;
+package com.ethereal.youtubedl.youtube;
 
+import com.ethereal.youtubedl.utils.YoutubeUtils;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -14,8 +15,8 @@ import java.util.List;
 
 /**
  * @author Slava
- *
- * Youtube video search implementation based on sample from google.
+ *         <p/>
+ *         Youtube video search implementation based on sample from google.
  * @see { https://github.com/youtube/api-samples/tree/master/java }
  */
 public final class VideoSearchProvider implements VideoSearch {
@@ -28,7 +29,7 @@ public final class VideoSearchProvider implements VideoSearch {
         youtube = new YouTube.Builder(YoutubeUtils.HTTP_TRANSPORT, YoutubeUtils.JSON_FACTORY, new HttpRequestInitializer() {
             public void initialize(HttpRequest request) throws IOException {
             }
-        }).setApplicationName("Youtube Music Downloader").build();
+        }).setApplicationName("Youtube Downloader").build();
     }
 
     @Override
@@ -50,12 +51,13 @@ public final class VideoSearchProvider implements VideoSearch {
             // Call the API and print results.
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResults = searchResponse.getItems();
-            for(SearchResult searchResult: searchResults) {
+            for (SearchResult searchResult : searchResults) {
                 searchResultList.add(new YoutubeResult(
                         searchResult.getId().getVideoId(),
                         searchResult.getSnippet().getTitle(),
                         searchResult.getSnippet().getThumbnails().getDefault().getUrl()
                 ));
+
             }
         } catch (GoogleJsonResponseException e) {
             logger.error("There was a service error: " + e.getDetails().getCode() + " : "

@@ -1,4 +1,4 @@
-package com.ethereal.ymd.youtube;
+package com.ethereal.youtubedl.utils;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;

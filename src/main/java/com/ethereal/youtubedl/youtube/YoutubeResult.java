@@ -1,4 +1,4 @@
-package com.ethereal.ymd.youtube;
+package com.ethereal.youtubedl.youtube;
 
 /**
  * @author Slava
