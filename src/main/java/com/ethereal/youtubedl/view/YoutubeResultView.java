@@ -50,6 +50,12 @@ public class YoutubeResultView extends JPanel {
         pDownloadProgress.setValue(value);
     }
 
+    public void clearProgress() {
+        if (pDownloadProgress.getValue()<100) {
+            pDownloadProgress.setValue(0);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public YoutubeResultView(final List<YoutubeResult> resultList) {
         initComponents();
@@ -58,6 +64,8 @@ public class YoutubeResultView extends JPanel {
         lThumbnail.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!YoutubeResultView.this.isEnabled()) return;
+
                 Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                 if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                     try {

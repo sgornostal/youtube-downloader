@@ -25,9 +25,8 @@ public class TrackListProcessForm extends JFrame {
 
     private final java.util.List<YoutubeResultView> resultViewList = new ArrayList<>();
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService processExecutor;
     private SwingWorker<Void, Void> downloadWorker;
-    private Integer videoCount;
-    private Integer progress;
 
     public TrackListProcessForm(final java.util.List<java.util.List<YoutubeResult>> results) {
         initComponents();
@@ -67,7 +66,7 @@ public class TrackListProcessForm extends JFrame {
         };
         worker.execute();
         waitDialog.setUndecorated(true);
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         final JLabel label = new JLabel("Please wait...");
         panel.add(label);
         waitDialog.add(panel);
@@ -117,13 +116,9 @@ public class TrackListProcessForm extends JFrame {
                 downloadWorker = new SwingWorker<Void, Void>() {
                     @Override
                     protected Void doInBackground() throws Exception {
-                        final ExecutorService executorService = Executors.newCachedThreadPool();
-                        videoCount = 0;
-                        progress = 0;
                         for (final YoutubeResultView youtubeResultView : resultViewList) {
                             final YoutubeResult selectedResult = youtubeResultView.getSelectedYoutubeResult();
                             if (selectedResult != null) {
-                                videoCount++;
                                 final StringBuilder paramBuilder = new StringBuilder(" ");
                                 switch ((String) cbMediaType.getSelectedItem()) {
                                     case "VIDEO":
@@ -140,7 +135,8 @@ public class TrackListProcessForm extends JFrame {
                                 }
                                 paramBuilder.append("-o ").append(targetDirectory)
                                         .append(RuntimeUtils.getOSSeparator()).append("%(title)s.%(ext)s ");
-                                executorService.submit(new Runnable() {
+                                processExecutor = Executors.newCachedThreadPool();
+                                processExecutor.submit(new Runnable() {
                                     @Override
                                     public void run() {
                                         try {
@@ -153,6 +149,8 @@ public class TrackListProcessForm extends JFrame {
                                                     youtubeResultView.changeDownloadProgress(progress);
                                                 }
                                             });
+                                        } catch (InterruptedException ie) {
+                                            logger.warn(ie.toString());
                                         } catch (Exception ex) {
                                             exceptionHandleBuffer.append(ex.toString());
                                             exceptionHandleBuffer.append("\n");
@@ -168,12 +166,12 @@ public class TrackListProcessForm extends JFrame {
                         bDownload.setEnabled(false);
                         bCancel.setEnabled(true);
                         bBack.setEnabled(false);
-                        executorService.shutdown();
+                        processExecutor.shutdown();
                         try {
-                            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+                            processExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
                         } catch (InterruptedException e) {
-                            logger.error(e);
-                            JOptionPane.showMessageDialog(TrackListProcessForm.this, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                            logger.warn(e);
+                            JOptionPane.showMessageDialog(TrackListProcessForm.this, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                         return null;
                     }
@@ -190,6 +188,17 @@ public class TrackListProcessForm extends JFrame {
                         bDownload.setEnabled(true);
                         bCancel.setEnabled(false);
                         bBack.setEnabled(true);
+
+                        //wait before finish all threads
+                        Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (YoutubeResultView youtubeResultView : resultViewList) {
+                                    youtubeResultView.clearProgress();
+                                }
+                                RuntimeUtils.clearCache(targetDirectory);
+                            }
+                        }, 1, TimeUnit.SECONDS);
                     }
                 };
                 downloadWorker.execute();
@@ -199,8 +208,12 @@ public class TrackListProcessForm extends JFrame {
         bCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                executorService.shutdownNow();
-                downloadWorker.cancel(true);
+                int result = JOptionPane.showConfirmDialog(TrackListProcessForm.this, "Cancel download?", "Warning",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (result == JOptionPane.OK_OPTION) {
+                    processExecutor.shutdownNow();
+                    downloadWorker.cancel(true);
+                }
             }
         });
 

@@ -1,5 +1,6 @@
 package com.ethereal.youtubedl.view;
 
+import com.ethereal.youtubedl.Main;
 import com.ethereal.youtubedl.utils.RuntimeUtils;
 import com.ethereal.youtubedl.youtube.VideoSearch;
 import com.ethereal.youtubedl.youtube.VideoSearchProvider;
@@ -78,6 +79,12 @@ public class MainForm extends JFrame {
         bProcess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if (taTrackList.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(MainForm.this, "Tracklist is empty", "Empty field", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
                 isInterrupted = false;
                 bProcess.setEnabled(false);
                 taTrackList.setEditable(false);
@@ -103,8 +110,8 @@ public class MainForm extends JFrame {
                         try {
                             executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
                         } catch (InterruptedException e) {
-                            logger.error(e);
-                            JOptionPane.showMessageDialog(MainForm.this, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                            logger.warn(e);
+                            JOptionPane.showMessageDialog(MainForm.this, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                         return null;
                     }
@@ -127,6 +134,7 @@ public class MainForm extends JFrame {
                 bProcess.setEnabled(true);
                 taTrackList.setEditable(true);
                 bCancel.setEnabled(false);
+                pProgressBar.setValue(0);
                 isInterrupted = true;
                 worker.cancel(true);
             }

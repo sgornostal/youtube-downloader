@@ -14,7 +14,7 @@ System Requirements
 ----
 * Windows/Unix
 * Java 1.7
-* Internet Connection
+* Python 2.6+ (**Unix only**)
 
 Build
 -----
