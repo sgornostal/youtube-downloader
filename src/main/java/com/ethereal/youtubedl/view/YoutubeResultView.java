@@ -1,6 +1,7 @@
 package com.ethereal.youtubedl.view;
 
 import com.ethereal.youtubedl.utils.RuntimeUtils;
+import com.ethereal.youtubedl.utils.YoutubeUtils;
 import com.ethereal.youtubedl.youtube.Quality;
 import com.ethereal.youtubedl.youtube.YoutubeResult;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -13,7 +14,10 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -50,6 +54,20 @@ public class YoutubeResultView extends JPanel {
     public YoutubeResultView(final List<YoutubeResult> resultList) {
         initComponents();
         selectedYoutubeResult = resultList.get(0);
+        lThumbnail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lThumbnail.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                    try {
+                        desktop.browse(new URI(YoutubeUtils.makeYouTubeLink(selectedYoutubeResult.getVideoId())));
+                    } catch (Exception ignored) {
+                        //do nothing
+                    }
+                }
+            }
+        });
         for (YoutubeResult youtubeResult : resultList) {
             cbValue.addItem(youtubeResult);
         }
